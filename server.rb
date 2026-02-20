@@ -40,7 +40,7 @@ get '/memos/new' do
       <div class="l--table">
         <form action="/memos" method="post">
           <div class="l--table-row">
-            <input type="text" name="title" id="title"/>
+            <input type="text" name="title" id="title" required/>
           </div>
           <div class="l--table-row">
             <textarea name="details" id="details"></textarea>
@@ -97,7 +97,7 @@ get '/memos/:id/edit' do
             <input type="hidden" name="_method" id="_method" value="PUT"/>
           </div>
           <div class="l--table-row">
-            <input type="text" name="title" id="title" value="#{memo['title']}" />
+            <input type="text" name="title" id="title" value="#{memo['title']}" required/>
           </div>
           <div class="l--table-row">
             <textarea name="details" id="details">#{memo['details']}</textarea>
