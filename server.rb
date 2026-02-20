@@ -9,7 +9,7 @@ def generate_html(title, body)
     <html lang="ja">
     <head>
       <meta charset="utf-8">
-      <link rel="stylesheet" href="http://localhost:4567/css/style.css" >
+      <link rel="stylesheet" href="http://localhost:4567/style.css" >
       <title>#{title}</title>
     </head>
     #{body}
