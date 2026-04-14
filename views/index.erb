@@ -1,0 +1,10 @@
+<div class="l--container">
+  <a href="http://localhost:4567/memos/new" class="l--button">追加</a>
+  <ul>
+    <% memos.each do |memo| %>
+      <li>
+        <a href="http://localhost:4567/memos/<%= memo.id %>"><%= memo.title %></a>
+      </li>
+    <% end %>
+  </ul>
+</div>
