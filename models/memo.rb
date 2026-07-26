@@ -14,7 +14,7 @@ class Memo
 
   def save
     if @id.nil?
-      @id = generate_id
+      @id = self.class.generate_id
       create
     else
       update
@@ -46,14 +46,14 @@ class Memo
     CSV.read(@@file_name, headers: true)
   end
 
-  private
-
-  def generate_id
-    table = self.class.load_table
+  def self.generate_id
+    table = load_table
     return 1 if table.empty?
     max_id = table.map{|row| row["id"].to_i}.max
     max_id + 1
   end
+
+  private
 
   def to_row
     [@id, @title, @detail]
