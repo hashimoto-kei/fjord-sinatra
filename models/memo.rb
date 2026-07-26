@@ -22,7 +22,7 @@ class Memo
   end
 
   def destroy
-    table = CSV.read(@@file_name, headers: true)
+    table = self.class.load_table
     CSV.open(@@file_name, "w") do |csv|
       csv << table.headers
       table.each do |row|
@@ -32,7 +32,7 @@ class Memo
   end
 
   def self.all
-    table = CSV.read(@@file_name, headers: true)
+    table = self.load_table
     table.map do |row|
       Memo.new(row["title"], row["detail"], row["id"])
     end
@@ -42,10 +42,14 @@ class Memo
     self.all.find { |memo| memo.id == id }
   end
 
+  def self.load_table
+    CSV.read(@@file_name, headers: true)
+  end
+
   private
 
   def generate_id
-    table = CSV.read(@@file_name, headers: true)
+    table = self.class.load_table
     return 1 if table.empty?
     max_id = table.map{|row| row["id"].to_i}.max
     max_id + 1
@@ -62,7 +66,7 @@ class Memo
   end
 
   def update
-    table = CSV.read(@@file_name, headers: true)
+    table = self.class.load_table
     CSV.open(@@file_name, "w") do |csv|
       csv << table.headers
       table.each do |row|
