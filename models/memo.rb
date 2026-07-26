@@ -1,7 +1,6 @@
 require "csv"
 
 class Memo
-  @@count = 0
   @@file_name = 'data/memos.csv'
 
   attr_reader :id
@@ -15,8 +14,7 @@ class Memo
 
   def save
     if @id.nil?
-      @@count += 1
-      @id = @@count
+      @id = generate_id
       create
     else
       update
@@ -45,6 +43,13 @@ class Memo
   end
 
   private
+
+  def generate_id
+    table = CSV.read(@@file_name, headers: true)
+    return 1 if table.empty?
+    max_id = table.map{|row| row["id"].to_i}.max
+    max_id + 1
+  end
 
   def to_row
     [@id, @title, @detail]
