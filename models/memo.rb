@@ -14,19 +14,19 @@ class Memo
 
   def save
     params = []
-    params << {:value => self.title}
-    params << {:value => self.detail}
-    if self.id.nil?
+    params << {:value => @title}
+    params << {:value => @detail}
+    if @id.nil?
       @@conn.exec_params( "INSERT INTO memos (title, detail) VALUES ($1, $2)", params )
     else
-      params << {:value => self.id} unless self.id.nil?
+      params << {:value => @id} unless @id.nil?
       @@conn.exec_params( "UPDATE memos SET title=$1, detail=$2 WHERE id=$3", params )
     end
   end
 
   def destroy
     params = []
-    params << {:value => self.id}
+    params << {:value => @id}
     @@conn.exec_params( "DELETE FROM memos WHERE id=$1", params )
   end
 
