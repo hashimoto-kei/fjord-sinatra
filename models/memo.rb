@@ -46,9 +46,13 @@ class Memo
 
   private
 
+  def to_row
+    [@id, @title, @detail]
+  end
+
   def create
     CSV.open(@@file_name, "a") do |csv|
-      csv << [@id, @title, @detail]
+      csv << to_row
     end
   end
 
@@ -57,7 +61,7 @@ class Memo
     CSV.open(@@file_name, "w") do |csv|
       csv << table.headers
       table.each do |row|
-        row = [@id, @title, @detail] if row["id"] == @id
+        row = to_row if row["id"] == @id
         csv << row
       end
     end
