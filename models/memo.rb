@@ -1,7 +1,8 @@
-require 'pg'
+require "csv"
 
 class Memo
-  @@conn = PG.connect( dbname: 'fjord_sinatra' )
+  @@count = 0
+  @@file_name = 'db/memos.csv'
 
   attr_reader :id
   attr_accessor :title, :detail
@@ -13,41 +14,51 @@ class Memo
   end
 
   def save
-    params = []
-    params << {:value => @title}
-    params << {:value => @detail}
     if @id.nil?
-      @@conn.exec_params( "INSERT INTO memos (title, detail) VALUES ($1, $2)", params )
+      @@count += 1
+      @id = @@count
+      create
     else
-      params << {:value => @id} unless @id.nil?
-      @@conn.exec_params( "UPDATE memos SET title=$1, detail=$2 WHERE id=$3", params )
+      update
     end
   end
 
   def destroy
-    params = []
-    params << {:value => @id}
-    @@conn.exec_params( "DELETE FROM memos WHERE id=$1", params )
+    table = CSV.read(@@file_name, headers: true)
+    CSV.open(@@file_name, "w") do |csv|
+      csv << table.headers
+      table.each do |row|
+        csv << row unless row["id"] == @id
+      end
+    end
   end
 
   def self.all
-    all = []
-    @@conn.exec( "SELECT * FROM memos ORDER BY id" ) do |result|
-      result.each do |row|
-        id, title, detail = row.values_at('id', 'title', 'detail')
-        all << Memo.new(title, detail, id)
-      end
+    csv = CSV.read(@@file_name, headers: true)
+    csv.map do |row|
+      Memo.new(row["title"], row["detail"], row["id"])
     end
-    all
   end
 
   def self.find(id)
-    params = []
-    params << {:value => id}
-    @@conn.exec_params( "SELECT * FROM memos WHERE id=$1", params ) do |result|
-      result.each do |row|
-        id, title, detail = row.values_at('id', 'title', 'detail')
-        return Memo.new(title, detail, id)
+    self.all.find { |memo| memo.id == id }
+  end
+
+  private
+
+  def create
+    CSV.open(@@file_name, "a") do |csv|
+      csv << [@id, @title, @detail]
+    end
+  end
+
+  def update
+    table = CSV.read(@@file_name, headers: true)
+    CSV.open(@@file_name, "w") do |csv|
+      csv << table.headers
+      table.each do |row|
+        row = [@id, @title, @detail] if row["id"] == @id
+        csv << row
       end
     end
   end
