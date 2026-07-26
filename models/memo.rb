@@ -32,7 +32,7 @@ class Memo
 
   def self.all
     all = []
-    @@conn.exec( "SELECT * FROM memos" ) do |result|
+    @@conn.exec( "SELECT * FROM memos ORDER BY id" ) do |result|
       result.each do |row|
         id, title, detail = row.values_at('id', 'title', 'detail')
         all << Memo.new(title, detail, id)
