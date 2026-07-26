@@ -2,7 +2,7 @@ require "csv"
 
 class Memo
   @@count = 0
-  @@file_name = 'db/memos.csv'
+  @@file_name = 'data/memos.csv'
 
   attr_reader :id
   attr_accessor :title, :detail
