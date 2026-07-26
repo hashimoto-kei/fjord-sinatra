@@ -34,8 +34,8 @@ class Memo
   end
 
   def self.all
-    csv = CSV.read(@@file_name, headers: true)
-    csv.map do |row|
+    table = CSV.read(@@file_name, headers: true)
+    table.map do |row|
       Memo.new(row["title"], row["detail"], row["id"])
     end
   end
