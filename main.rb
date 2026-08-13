@@ -19,7 +19,7 @@ end
 post '/memos' do
   memo = Memo.new(params['title'], params['detail'])
   memo.save
-  redirect to('/')
+  redirect to('/memos')
 end
 
 get '/memos/:id' do |id|
