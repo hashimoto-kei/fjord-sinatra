@@ -39,11 +39,11 @@ put '/memos/:id' do |id|
   memo.title = params['title']
   memo.detail = params['detail']
   memo.save
-  redirect to('/')
+  redirect to('/memos')
 end
 
 delete '/memos/:id' do |id|
   memo = Memo.find(id)
   memo.destroy
-  redirect to('/')
+  redirect to('/memos')
 end
