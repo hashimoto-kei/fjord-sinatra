@@ -7,7 +7,7 @@
   </div>
 </div>
 <div class="l--table-row l--button-container">
-  <a href="http://localhost:4567/memos/<%= memo.id %>/edit" class="l--button">変更</a>
+  <a href="/memos/<%= memo.id %>/edit" class="l--button">変更</a>
   <form action="/memos/<%= memo.id %>" method="post">
     <input type="hidden" name="_method" id="_method" value="DELETE"/>
     <input type="submit" value="削除" class="l--button" />
