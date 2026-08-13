@@ -13,13 +13,17 @@ end
 
 get '/memos/new' do
   @title = 'New memo'
+  @memo = Memo.new
   erb :new
 end
 
 post '/memos' do
-  memo = Memo.new(params['title'], params['detail'])
-  memo.save
-  redirect to('/memos')
+  @memo = Memo.new(params['title'], params['detail'])
+  if @memo.save
+    redirect to('/memos')
+  else
+    erb :new
+  end
 end
 
 get '/memos/:id' do |id|
@@ -35,11 +39,14 @@ get '/memos/:id/edit' do |id|
 end
 
 put '/memos/:id' do |id|
-  memo = Memo.find(id)
-  memo.title = params['title']
-  memo.detail = params['detail']
-  memo.save
-  redirect to('/memos')
+  @memo = Memo.find(id)
+  @memo.title = params['title']
+  @memo.detail = params['detail']
+  if @memo.save
+    redirect to('/memos')
+  else
+    erb :edit
+  end
 end
 
 delete '/memos/:id' do |id|

@@ -6,19 +6,21 @@ class Memo
   attr_reader :id
   attr_accessor :title, :detail
 
-  def initialize(title, detail, id=nil)
+  def initialize(title=nil, detail=nil, id=nil)
     @id = id
     @title = title
     @detail = detail
   end
 
   def save
+    return false if @title.empty?
     if @id.nil?
       @id = self.class.generate_id
       create
     else
       update
     end
+    true
   end
 
   def destroy
