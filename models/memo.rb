@@ -1,7 +1,7 @@
 require "csv"
 
 class Memo
-  @@file_name = 'data/memos.csv'
+  FILE_NAME = 'data/memos.csv'
 
   attr_reader :id
   attr_accessor :title, :detail
@@ -23,7 +23,7 @@ class Memo
 
   def destroy
     table = self.class.load_table
-    CSV.open(@@file_name, "w") do |csv|
+    CSV.open(FILE_NAME, "w") do |csv|
       csv << table.headers
       table.each do |row|
         csv << row unless row["id"] == @id
@@ -43,7 +43,7 @@ class Memo
   end
 
   def self.load_table
-    CSV.read(@@file_name, headers: true)
+    CSV.read(FILE_NAME, headers: true)
   end
 
   def self.generate_id
@@ -60,14 +60,14 @@ class Memo
   end
 
   def create
-    CSV.open(@@file_name, "a") do |csv|
+    CSV.open(FILE_NAME, "a") do |csv|
       csv << to_row
     end
   end
 
   def update
     table = self.class.load_table
-    CSV.open(@@file_name, "w") do |csv|
+    CSV.open(FILE_NAME, "w") do |csv|
       csv << table.headers
       table.each do |row|
         row = to_row if row["id"] == @id
