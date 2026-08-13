@@ -31,17 +31,29 @@ end
 get '/memos/:id' do |id|
   @title = 'Show memo'
   @memo = Memo.find(id)
+  if @memo.nil?
+    status 404
+    return erb :not_found
+  end
   erb :show
 end
 
 get '/memos/:id/edit' do |id|
   @title = 'Edit memo'
   @memo = Memo.find(id)
+  if @memo.nil?
+    status 404
+    return erb :not_found
+  end
   erb :edit
 end
 
 patch '/memos/:id' do |id|
   @memo = Memo.find(id)
+  if @memo.nil?
+    status 404
+    return erb :not_found
+  end
   @memo.title = params['title']
   @memo.detail = params['detail']
   if @memo.save
@@ -55,8 +67,16 @@ end
 
 delete '/memos/:id' do |id|
   memo = Memo.find(id)
+  if memo.nil?
+    status 404
+    return erb :not_found
+  end
   memo.destroy
   redirect to('/memos')
+end
+
+not_found do
+  erb :not_found
 end
 
 helpers do
