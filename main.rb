@@ -22,6 +22,7 @@ post '/memos' do
   if @memo.save
     redirect to('/memos')
   else
+    @errors = @memo.errors
     status 422
     erb :new
   end
@@ -46,6 +47,7 @@ put '/memos/:id' do |id|
   if @memo.save
     redirect to('/memos')
   else
+    @errors = @memo.errors
     status 422
     erb :edit
   end

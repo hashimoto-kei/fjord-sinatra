@@ -3,17 +3,21 @@ require "csv"
 class Memo
   FILE_NAME = 'data/memos.csv'
 
-  attr_reader :id
+  attr_reader :id, :errors
   attr_accessor :title, :detail
 
   def initialize(title=nil, detail=nil, id=nil)
     @id = id
     @title = title
     @detail = detail
+    @errors = []
   end
 
   def save
-    return false if @title.empty?
+    if @title.empty?
+      @errors << 'タイトルは必須です'
+      return false
+    end
     if @id.nil?
       @id = self.class.generate_id
       create
