@@ -40,7 +40,7 @@ get '/memos/:id/edit' do |id|
   erb :edit
 end
 
-put '/memos/:id' do |id|
+patch '/memos/:id' do |id|
   @memo = Memo.find(id)
   @memo.title = params['title']
   @memo.detail = params['detail']

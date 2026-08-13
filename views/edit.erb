@@ -1,7 +1,7 @@
 <div class="l--table">
   <form action="/memos/<%= @memo.id %>" method="post">
     <div class="l--table-row">
-      <input type="hidden" name="_method" id="_method" value="PUT"/>
+      <input type="hidden" name="_method" id="_method" value="PATCH"/>
     </div>
     <div class="l--table-row">
       <input type="text" name="title" id="title" value="<%= @memo.title %>"/>
