@@ -6,11 +6,14 @@ get '/' do
 end
 
 get '/memos' do
-  erb :index, :locals => {title: 'Top', memos: Memo.all}
+  @title = 'Top'
+  @memos = Memo.all
+  erb :index
 end
 
 get '/memos/new' do
-  erb :new, :locals => {title: 'New memo'}
+  @title = 'New memo'
+  erb :new
 end
 
 post '/memos' do
@@ -20,11 +23,15 @@ post '/memos' do
 end
 
 get '/memos/:id' do |id|
-  erb :show, :locals => {title: 'Show memo', memo: Memo.find(id)}
+  @title = 'Show memo'
+  @memo = Memo.find(id)
+  erb :show
 end
 
 get '/memos/:id/edit' do |id|
-  erb :edit, :locals => {title: 'Edit memo', memo: Memo.find(id)}
+  @title = 'Edit memo'
+  @memo = Memo.find(id)
+  erb :edit
 end
 
 put '/memos/:id' do |id|
