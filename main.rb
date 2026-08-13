@@ -58,3 +58,9 @@ delete '/memos/:id' do |id|
   memo.destroy
   redirect to('/memos')
 end
+
+helpers do
+  def h(value)
+    Rack::Utils.escape_html(value)
+  end
+end
