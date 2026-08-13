@@ -2,6 +2,10 @@ require 'sinatra'
 require_relative 'models/memo'
 
 get '/' do
+  redirect to('/memos')
+end
+
+get '/memos' do
   erb :index, :locals => {title: 'Top', memos: Memo.all}
 end
 
