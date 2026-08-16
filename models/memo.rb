@@ -40,14 +40,14 @@ class Memo
   end
 
   def self.all
-    table = self.load_table
+    table = load_table
     table.map do |row|
       Memo.new(row['title'], row['detail'], row['id'])
     end
   end
 
   def self.find(id)
-    self.all.find { |memo| memo.id == id }
+    all.find { |memo| memo.id == id }
   end
 
   def self.load_table
