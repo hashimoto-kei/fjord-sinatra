@@ -16,7 +16,7 @@ bundle install
 ## 起動方法
 
 ```sh
-bundle exec ruby app.rb
+bundle exec ruby main.rb
 ```
 
 起動後、ブラウザで <http://localhost:4567/> を開きます。
