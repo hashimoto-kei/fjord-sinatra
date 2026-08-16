@@ -57,6 +57,7 @@ class Memo
   def self.generate_id
     table = load_table
     return 1 if table.empty?
+
     max_id = table.map{|row| row['id'].to_i}.max
     max_id + 1
   end
