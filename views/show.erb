@@ -1,6 +1,6 @@
 <div class="l--table">
   <div class="l--table-row">
-    <input type="text" name="title" id="title" value="<%= h(@memo.title) %>" disabled />
+    <input type="text" name="title" id="title" value="<%= h(@memo.title) %>" disabled>
   </div>
   <div class="l--table-row">
     <textarea name="detail" id="detail" disabled><%= h(@memo.detail) %></textarea>
@@ -9,7 +9,7 @@
 <div class="l--table-row l--button-container">
   <a href="/memos/<%= h(@memo.id) %>/edit" class="l--button">変更</a>
   <form action="/memos/<%= h(@memo.id) %>" method="post">
-    <input type="hidden" name="_method" id="_method" value="DELETE"/>
-    <input type="submit" value="削除" class="l--button" />
+    <input type="hidden" name="_method" id="_method" value="DELETE">
+    <input type="submit" value="削除" class="l--button">
   </form>
 </div>
