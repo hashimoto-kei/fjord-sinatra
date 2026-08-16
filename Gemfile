@@ -2,9 +2,9 @@
 
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'rackup'
 gem 'puma'
+gem 'rackup'
+gem 'sinatra'
 
 group :development do
   gem 'rubocop', require: false
