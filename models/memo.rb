@@ -1,4 +1,4 @@
-require "csv"
+require 'csv'
 
 class Memo
   FILE_NAME = 'data/memos.csv'
@@ -29,10 +29,10 @@ class Memo
 
   def destroy
     table = self.class.load_table
-    CSV.open(FILE_NAME, "w") do |csv|
+    CSV.open(FILE_NAME, 'w') do |csv|
       csv << table.headers
       table.each do |row|
-        csv << row unless row["id"] == @id
+        csv << row unless row['id'] == @id
       end
     end
   end
@@ -40,7 +40,7 @@ class Memo
   def self.all
     table = self.load_table
     table.map do |row|
-      Memo.new(row["title"], row["detail"], row["id"])
+      Memo.new(row['title'], row['detail'], row['id'])
     end
   end
 
@@ -55,7 +55,7 @@ class Memo
   def self.generate_id
     table = load_table
     return 1 if table.empty?
-    max_id = table.map{|row| row["id"].to_i}.max
+    max_id = table.map{|row| row['id'].to_i}.max
     max_id + 1
   end
 
@@ -66,17 +66,17 @@ class Memo
   end
 
   def create
-    CSV.open(FILE_NAME, "a") do |csv|
+    CSV.open(FILE_NAME, 'a') do |csv|
       csv << to_row
     end
   end
 
   def update
     table = self.class.load_table
-    CSV.open(FILE_NAME, "w") do |csv|
+    CSV.open(FILE_NAME, 'w') do |csv|
       csv << table.headers
       table.each do |row|
-        row = to_row if row["id"] == @id
+        row = to_row if row['id'] == @id
         csv << row
       end
     end
