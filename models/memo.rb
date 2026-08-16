@@ -8,7 +8,7 @@ class Memo
   attr_reader :id, :errors
   attr_accessor :title, :detail
 
-  def initialize(title=nil, detail=nil, id=nil)
+  def initialize(title = nil, detail = nil, id = nil)
     @id = id
     @title = title
     @detail = detail
