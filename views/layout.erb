@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/style.css">
+  <title><%= @title %></title>
+</head>
+<body>
+  <h1>メモアプリ</h1>
+  <ul>
+    <% @errors&.each do |error| %>
+      <li>
+        <%= error %>
+      </li>
+    <% end %>
+  </ul>
+  <%= yield %>
+</body>
+</html>
