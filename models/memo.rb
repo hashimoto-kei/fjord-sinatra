@@ -16,10 +16,7 @@ class Memo
   end
 
   def save
-    if @title.empty?
-      @errors << 'タイトルは必須です'
-      return false
-    end
+    return false if invalid?
     @id = self.class.generate_id
     CSV.open(FILE_NAME, 'a') do |csv|
       csv << to_row
@@ -30,10 +27,7 @@ class Memo
   def update(title, detail)
     @title = title
     @detail = detail
-    if @title.empty?
-      @errors << 'タイトルは必須です'
-      return false
-    end
+    return false if invalid?
     table = self.class.load_table
     CSV.open(FILE_NAME, 'w') do |csv|
       csv << table.headers
@@ -82,5 +76,13 @@ class Memo
 
   def to_row
     [@id, @title, @detail]
+  end
+
+  def invalid?
+    if @title.empty?
+      @errors << 'タイトルは必須です'
+      return true
+    end
+    false
   end
 end
