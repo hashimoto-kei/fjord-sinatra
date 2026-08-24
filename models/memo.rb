@@ -5,8 +5,7 @@ require 'csv'
 class Memo
   FILE_NAME = 'data/memos.csv'
 
-  attr_reader :id, :errors
-  attr_accessor :title, :detail
+  attr_reader :id, :title, :detail, :errors
 
   def initialize(title = nil, detail = nil, id = nil)
     @id = id
