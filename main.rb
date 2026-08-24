@@ -20,7 +20,7 @@ get '/memos/new' do
 end
 
 post '/memos' do
-  @memo = Memo.new(params['title'], params['detail'])
+  @memo = Memo.new(*params.values_at('title', 'detail'))
   if @memo.save
     redirect to('/memos')
   else

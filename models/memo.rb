@@ -42,7 +42,7 @@ class Memo
   def self.all
     table = load_table
     table.map do |row|
-      Memo.new(row['title'], row['detail'], row['id'])
+      Memo.new(*row.values_at('title', 'detail', 'id'))
     end
   end
 
