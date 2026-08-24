@@ -20,11 +20,27 @@ class Memo
       @errors << 'タイトルは必須です'
       return false
     end
-    if @id.nil?
-      @id = self.class.generate_id
-      create
-    else
-      update
+    @id = self.class.generate_id
+    CSV.open(FILE_NAME, 'a') do |csv|
+      csv << to_row
+    end
+    true
+  end
+
+  def update(title, detail)
+    @title = title
+    @detail = detail
+    if @title.empty?
+      @errors << 'タイトルは必須です'
+      return false
+    end
+    table = self.class.load_table
+    CSV.open(FILE_NAME, 'w') do |csv|
+      csv << table.headers
+      table.each do |row|
+        row = to_row if row['id'] == @id
+        csv << row
+      end
     end
     true
   end
@@ -66,22 +82,5 @@ class Memo
 
   def to_row
     [@id, @title, @detail]
-  end
-
-  def create
-    CSV.open(FILE_NAME, 'a') do |csv|
-      csv << to_row
-    end
-  end
-
-  def update
-    table = self.class.load_table
-    CSV.open(FILE_NAME, 'w') do |csv|
-      csv << table.headers
-      table.each do |row|
-        row = to_row if row['id'] == @id
-        csv << row
-      end
-    end
   end
 end

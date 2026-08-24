@@ -56,9 +56,7 @@ patch '/memos/:id' do |id|
     status 404
     return erb :not_found
   end
-  @memo.title = params['title']
-  @memo.detail = params['detail']
-  if @memo.save
+  if @memo.update(*params.values_at('title', 'detail'))
     redirect to('/memos')
   else
     @errors = @memo.errors
