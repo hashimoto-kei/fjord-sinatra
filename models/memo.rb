@@ -17,6 +17,7 @@ class Memo
 
   def save
     return false if invalid?
+
     @id = self.class.generate_id
     CSV.open(FILE_NAME, 'a') do |csv|
       csv << to_row
@@ -28,6 +29,7 @@ class Memo
     @title = title
     @detail = detail
     return false if invalid?
+
     table = self.class.load_table
     CSV.open(FILE_NAME, 'w') do |csv|
       csv << table.headers
