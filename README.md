@@ -13,6 +13,12 @@
 bundle install
 ```
 
+リポジトリのルートディレクトリで以下のコマンドを実行します。
+
+```sh
+echo id,title,detail > data/memos.csv
+```
+
 ## 起動方法
 
 ```sh
