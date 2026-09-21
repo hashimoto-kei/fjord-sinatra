@@ -1,0 +1,40 @@
+.l--table {
+  display: table;
+}
+
+.l--table-row {
+  display: table-row;
+}
+
+.l--button-container {
+  display: flex
+}
+
+.l--button {
+  background: gray;
+  border: solid 1px;
+  border-radius: 20px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.l--button:hover {
+  background: silver;
+  text-decoration: none;
+}
+
+textarea {
+  border: solid 1px;
+  margin-block: 2px;
+  resize: none;
+  width: 100%;
+}
+
+input[type=text] {
+  border: solid 1px;
+  margin-block: 2px;
+  width: 100%;
+}
