@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby '4.0.6'
 
-gem 'csv'
+gem 'pg'
 gem 'puma'
 gem 'rackup'
 gem 'sinatra'

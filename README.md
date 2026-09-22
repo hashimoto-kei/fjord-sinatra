@@ -6,6 +6,7 @@
 
 - Ruby 4.0.6
 - Bundler 4.0.16
+- PostgreSQL 15.17
 
 ## セットアップ
 
@@ -16,7 +17,7 @@ bundle install
 リポジトリのルートディレクトリで以下のコマンドを実行します。
 
 ```sh
-echo id,title,detail > data/memos.csv
+psql -h localhost -U <username> -d postgres -f ./db/init.sql
 ```
 
 ## 起動方法
