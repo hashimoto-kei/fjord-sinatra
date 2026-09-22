@@ -14,7 +14,7 @@
 bundle install
 ```
 
-リポジトリのルートディレクトリで以下のコマンドを実行します。
+PostgreSQL を起動してから、リポジトリのルートディレクトリで以下のコマンドを実行します。
 
 ```sh
 psql -h localhost -U <username> -d postgres -f ./db/init.sql
@@ -30,4 +30,4 @@ bundle exec ruby main.rb
 
 ## データ保存
 
-メモのデータは `data/memos.csv` に保存します。
+メモのデータは PostgreSQL の `fjord_sinatra` データベースにある `memos` テーブルへ保存されます。
