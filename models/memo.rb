@@ -44,7 +44,7 @@ class Memo
   end
 
   def self.find(id)
-    CONN.exec_params('SELECT * FROM memos WHERE id = $1;', [id]) do |result|
+    CONN.exec_params('SELECT * FROM memos WHERE id = $1 LIMIT 1;', [id]) do |result|
       row = result.each.first
       return nil if row.nil?
 
