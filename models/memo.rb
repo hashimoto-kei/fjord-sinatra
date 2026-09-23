@@ -4,6 +4,7 @@ require 'pg'
 
 class Memo
   CONN = PG.connect(dbname: 'fjord_sinatra')
+  CONN.field_name_type = :symbol
 
   attr_reader :id, :title, :detail, :errors
 
@@ -38,7 +39,7 @@ class Memo
     all = []
     CONN.exec('SELECT * FROM memos ORDER BY id;') do |result|
       result.each do |row|
-        all << Memo.new(*row.values_at('title', 'detail', 'id'))
+        all << Memo.new(*row.values_at(:title, :detail, :id))
       end
     end
     all
@@ -49,7 +50,7 @@ class Memo
       row = result.each.first
       return nil if row.nil?
 
-      return Memo.new(*row.values_at('title', 'detail', 'id'))
+      return Memo.new(*row.values_at(:title, :detail, :id))
     end
   end
 
