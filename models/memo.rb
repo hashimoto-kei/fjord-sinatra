@@ -36,13 +36,11 @@ class Memo
   end
 
   def self.all
-    all = []
     CONN.exec('SELECT * FROM memos ORDER BY id;') do |result|
-      result.each do |row|
-        all << Memo.new(*row.values_at(:title, :detail, :id))
+      result.map do |row|
+        Memo.new(*row.values_at(:title, :detail, :id))
       end
     end
-    all
   end
 
   def self.find(id)
