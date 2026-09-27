@@ -6,7 +6,7 @@
 
 - Ruby 4.0.6
 - Bundler 4.0.16
-- PostgreSQL 15.17
+- PostgreSQL 18.6
 
 ## セットアップ
 
