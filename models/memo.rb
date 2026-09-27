@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require 'csv'
+require 'pg'
 
 class Memo
-  FILE_NAME = 'data/memos.csv'
+  CONN = PG.connect(dbname: 'fjord_sinatra')
+  CONN.field_name_type = :symbol
 
   attr_reader :id, :title, :detail, :errors
 
@@ -17,10 +18,7 @@ class Memo
   def save
     return false if invalid?
 
-    @id = self.class.generate_id
-    CSV.open(FILE_NAME, 'a') do |csv|
-      csv << to_row
-    end
+    CONN.exec_params('INSERT INTO memos (title, detail) VALUES ($1, $2);', [title, detail])
     true
   end
 
@@ -29,55 +27,32 @@ class Memo
     @detail = detail
     return false if invalid?
 
-    table = self.class.load_table
-    CSV.open(FILE_NAME, 'w') do |csv|
-      csv << table.headers
-      table.each do |row|
-        row = to_row if row['id'] == @id
-        csv << row
-      end
-    end
+    CONN.exec_params('UPDATE memos SET title = $1, detail = $2 WHERE id = $3;', [title, detail, id])
     true
   end
 
   def destroy
-    table = self.class.load_table
-    CSV.open(FILE_NAME, 'w') do |csv|
-      csv << table.headers
-      table.each do |row|
-        csv << row unless row['id'] == @id
+    CONN.exec_params('DELETE FROM memos WHERE id = $1;', [id])
+  end
+
+  def self.all
+    CONN.exec('SELECT * FROM memos ORDER BY id;') do |result|
+      result.map do |row|
+        Memo.new(*row.values_at(:title, :detail, :id))
       end
     end
   end
 
-  def self.all
-    table = load_table
-    table.map do |row|
-      Memo.new(*row.values_at('title', 'detail', 'id'))
+  def self.find(id)
+    CONN.exec_params('SELECT * FROM memos WHERE id = $1 LIMIT 1;', [id]) do |result|
+      row = result.each.first
+      return nil if row.nil?
+
+      return Memo.new(*row.values_at(:title, :detail, :id))
     end
   end
 
-  def self.find(id)
-    all.find { |memo| memo.id == id }
-  end
-
-  def self.load_table
-    CSV.read(FILE_NAME, headers: true)
-  end
-
-  def self.generate_id
-    table = load_table
-    return 1 if table.empty?
-
-    max_id = table.map { |row| row['id'].to_i }.max
-    max_id + 1
-  end
-
   private
-
-  def to_row
-    [@id, @title, @detail]
-  end
 
   def invalid?
     if @title.empty?
